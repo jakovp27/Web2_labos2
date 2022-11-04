@@ -1,0 +1,10 @@
+html 
+   head 
+      title Privatni podaci
+   body
+      a(href='/', title='Home') Home  
+      each res in results
+         p Korisničko ime : #{res.username}
+         p Ime : #{res.name}
+         p Prezime : #{res.surname}
+         p E-mail : #{res.mail}

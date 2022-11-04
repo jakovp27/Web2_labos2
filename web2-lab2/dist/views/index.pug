@@ -1,0 +1,23 @@
+html 
+    head 
+        title Sigurnost aplikacija
+    body
+        form(action="/", method="post")
+            label(for="check") SQL injection dozvoljen: 
+            if check 
+                input(type="checkbox" name="check" id="check" checked)
+            else
+                input(type="checkbox" name="check" id="check")
+            input(type="submit", value="Potvrdi promjenu")
+        if check 
+            h1 SQL injection omogućen 
+        else 
+            h1 SQL injection onemogućen
+        h2 Prijavite se u korisnički račun kako bi dohvatili podatke
+        form(action="/userdata", method="post")
+            label(for="username") Korisničko ime: 
+            input(type="text" name="username" id="username")
+            br
+            input(type="submit", value="Prijava")
+        if msg
+            p #{msg}
