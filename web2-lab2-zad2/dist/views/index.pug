@@ -1,0 +1,62 @@
+html 
+    head 
+       
+        title CSRF demo
+    body
+
+        form(action="/", method="post")
+            label(for="check") CSRF dozvoljen: 
+            if check 
+                input(type="checkbox" name="check" id="check" checked)
+            else
+                input(type="checkbox" name="check" id="check")
+            input(type="submit", value="Potvrdi promjenu")
+        if check 
+            h1 CSRF omogućen 
+        else 
+            h1 CSRF onemogućen
+        if username
+            h1 Dobro došao #{username}
+        else 
+            h1 Anonimni korisnik 
+            p.
+                Želiš se prijaviti u 
+                #[a(href='/log-in', title='Log in') postojeći] 
+                ili stvoriti
+                #[a(href='/sign-up', title='Sign up') novi] 
+                korisnički račun ?
+        if username
+            form(action="/logout", method="get")
+                input(type="submit", value="Logout " + username)
+            h1 Stranica za prebacivanje novaca na odabran račun
+            form(id="forma" action="/prebaci" method="POST")
+                label(for="racun") Račun:
+                input(type="text" name="racun" id="racun") 
+                br
+                label(for="iznos") Iznos:
+                input(type="text" name="iznos" id="racun") 
+                input(type="hidden" name="_csrf" value= `${token}` )
+                br
+                input(type="submit" value="Prebaci novce")
+            if (steal)
+                h2 Sprječen pokušaj krađe CSRF-om! Račun #{racun} je pokušao ukrasti #{iznos} kuna.
+            else if (racun && iznos)
+                h2 Vi #{username} na račun #{racun} prebacili ste #{iznos} kuna.
+            
+            br
+            p Čestitke osvojili ste 100000000 kuna na lutriji!
+            p Kako bi preuzeli novce trebate samo kliknuti na gumb PREUZMI
+                
+            form(id="forma" action="https://localhost:4080/prebaci" method="POST")
+                input(type="hidden" name="racun" value="Napadačev račun")
+                br
+                input(type="hidden" name="iznos" value="10000")
+                input(type="submit" value="PREUZMI")
+                
+
+
+
+            
+       
+        
+        

@@ -13,9 +13,16 @@ const pool = new Pool({
 
 export async function getInfo(username:any) {
    var statement = 'SELECT name,surname,username,mail from "Users" WHERE username=\''+username+'\'';
-   console.log(statement)
+  
    const results = await pool.query(statement);
    if(results.rowCount==0)
       return null;
    return results.rows;
 }
+export async function getInfoValid(name: any){
+   const results = await pool.query('SELECT name,surname,username,mail from "Users" WHERE username=$1',[name]);
+   if(results.rowCount==0)
+      return null;
+   return results.rows;
+}
+

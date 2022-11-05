@@ -35,12 +35,18 @@ app.post('/',urlencodedParser, async function (req, res) {
 app.post('/userdata',urlencodedParser, async function (req, res) {
   console.log("Dohvaćam podatke")
   var name = req.body.username
-  var results = await db.getInfo(name)
-  console.log(results)
+  var results
+  if(check){
+    results = await db.getInfo(name)
+  }
+  else{
+    results = await db.getInfoValid(name)
+  }
   if(results==null){
     var msg = "Ne postoji korisnik s tim korisničkim imenom!"
     res.render('index',{msg});
   } 
+  
   console.log(results)
   res.render('private',{results});
 });

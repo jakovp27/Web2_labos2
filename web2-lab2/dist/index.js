@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.getInfo = void 0;
+exports.getInfoValid = exports.getInfo = void 0;
 var pg_1 = require("pg");
 var dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1["default"].config({ path: require('find-config')('.env') });
@@ -59,7 +59,6 @@ function getInfo(username) {
             switch (_a.label) {
                 case 0:
                     statement = 'SELECT name,surname,username,mail from "Users" WHERE username=\'' + username + '\'';
-                    console.log(statement);
                     return [4 /*yield*/, pool.query(statement)];
                 case 1:
                     results = _a.sent();
@@ -71,3 +70,19 @@ function getInfo(username) {
     });
 }
 exports.getInfo = getInfo;
+function getInfoValid(name) {
+    return __awaiter(this, void 0, void 0, function () {
+        var results;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, pool.query('SELECT name,surname,username,mail from "Users" WHERE username=$1', [name])];
+                case 1:
+                    results = _a.sent();
+                    if (results.rowCount == 0)
+                        return [2 /*return*/, null];
+                    return [2 /*return*/, results.rows];
+            }
+        });
+    });
+}
+exports.getInfoValid = getInfoValid;

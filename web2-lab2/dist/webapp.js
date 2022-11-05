@@ -81,10 +81,16 @@ app.post('/userdata', urlencodedParser, function (req, res) {
                 case 0:
                     console.log("Dohvaćam podatke");
                     name = req.body.username;
+                    if (!check) return [3 /*break*/, 2];
                     return [4 /*yield*/, db.getInfo(name)];
                 case 1:
                     results = _a.sent();
-                    console.log(results);
+                    return [3 /*break*/, 4];
+                case 2: return [4 /*yield*/, db.getInfoValid(name)];
+                case 3:
+                    results = _a.sent();
+                    _a.label = 4;
+                case 4:
                     if (results == null) {
                         msg = "Ne postoji korisnik s tim korisničkim imenom!";
                         res.render('index', { msg: msg });
